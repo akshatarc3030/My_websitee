@@ -1,0 +1,39 @@
+import { useState } from 'react';
+import {
+  FiArrowUpRight, FiAward, FiBookOpen, FiCode, FiCpu, FiDownload,
+  FiGithub, FiLayers, FiLinkedin, FiMail, FiMapPin, FiMenu, FiSend,
+  FiTool, FiX, FiZap,
+} from 'react-icons/fi';
+import { certifications, profile, projects, skillGroups } from './data/portfolioData';
+
+const Icon = ({ name }) => ({ code: FiCode, spark: FiZap, tool: FiTool, braces: FiLayers }[name] || FiCode)();
+
+function Navbar() {
+  const [open, setOpen] = useState(false);
+  const links = ['About', 'Education', 'Skills', 'Projects', 'Certifications', 'Contact'];
+  return <header className="nav-wrap"><nav className="nav container" aria-label="Main navigation">
+    <a className="brand" href="#home" onClick={() => setOpen(false)}><span>AC</span><strong>akshata<span>.</span></strong></a>
+    <button className="menu-toggle" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(!open)}>{open ? <FiX /> : <FiMenu />}</button>
+    <div className={`nav-links ${open ? 'is-open' : ''}`}>
+      {links.map((link) => <a key={link} href={`#${link.toLowerCase()}`} onClick={() => setOpen(false)}>{link}</a>)}
+      <a className="nav-cta" href="#contact" onClick={() => setOpen(false)}>Let's talk <FiArrowUpRight /></a>
+    </div>
+  </nav></header>;
+}
+
+function SocialLinks() { return <div className="social-links"><a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub profile"><FiGithub /></a><a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile"><FiLinkedin /></a></div>; }
+
+function Hero() { return <section className="hero" id="home"><div className="hero-grid" /><div className="container hero-inner">
+  <div className="hero-copy reveal"><p className="eyebrow"><span className="status-dot" /> Currently pursuing B.Tech</p><h1>Building with <em>curiosity.</em><br />Learning with purpose.</h1><p className="hero-text">I’m Akshata, an aspiring AI and Data Science developer passionate about practical technology that makes a difference.</p><div className="hero-actions"><a className="button button-primary" href="#projects">View my projects <FiArrowUpRight /></a><a className="text-link" href="#contact">Contact me <FiArrowUpRight /></a></div><SocialLinks /></div>
+  <div className="hero-visual reveal"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="profile-mark"><span>AI</span><small>DATA<br />SCIENCE</small></div><div className="float-note note-one"><FiCpu /><span>Ideas →<br /><b>Impact</b></span></div><div className="float-note note-two"><FiCode /><span>Always<br /><b>learning</b></span></div></div>
+</div><div className="hero-footer container"><span>01 / 06</span><span className="scroll-hint">Scroll to explore <span>↓</span></span></div></section>; }
+
+function SectionHeading({ kicker, title, intro }) { return <div className="section-heading reveal"><p className="kicker">{kicker}</p><h2>{title}</h2>{intro && <p>{intro}</p>}</div>; }
+function About() { return <section className="section about" id="about"><div className="container about-grid"><SectionHeading kicker="01 — About me" title={<>Curious by nature.<br /><em>Driven by possibility.</em></>} /><div className="about-copy reveal"><p>I’m currently pursuing a <strong>B.Tech in Artificial Intelligence & Data Science</strong> at REVA University, Bangalore.</p><p>I’m interested in turning thoughtful ideas into useful applications across Artificial Intelligence, Data Science, Machine Learning and application development.</p><div className="signature">A<span>·</span>C</div></div></div></section>; }
+function Education() { return <section className="section education" id="education"><div className="container"><SectionHeading kicker="02 — Education" title="Where the foundation is being built." /><article className="education-card reveal"><div className="edu-icon"><FiBookOpen /></div><div><p className="kicker">Currently pursuing</p><h3>B.Tech in Artificial Intelligence<br className="desktop-only" /> & Data Science</h3><p>REVA University <span className="separator">/</span> Bangalore, India</p></div><span className="edu-year">B.Tech</span></article></div></section>; }
+function Skills() { return <section className="section skills" id="skills"><div className="container"><SectionHeading kicker="03 — Skills" title="Tools for thoughtful work." intro="A growing toolkit shaped by practice, projects and a willingness to understand how things work." /><div className="skill-grid">{skillGroups.map((group) => <article className="skill-card reveal" key={group.title}><div className="skill-card-top"><span className="skill-icon"><Icon name={group.icon} /></span><span>0{skillGroups.indexOf(group) + 1}</span></div><h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}><span />{item}</li>)}</ul></article>)}</div></div></section>; }
+function Projects() { return <section className="section projects" id="projects"><div className="container"><SectionHeading kicker="04 — Selected projects" title="Small ideas, real-world direction." /><div className="project-list">{projects.map((project) => <article className={`project-card reveal ${project.featured ? 'featured' : ''}`} key={project.name}><div className="project-number">{project.number}</div><div className="project-content"><p className="kicker">{project.type}</p><h3>{project.name}</h3><p>{project.description}</p><div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></div><FiArrowUpRight className="project-arrow" /></article>)}</div></div></section>; }
+function Certifications() { return <section className="section certifications" id="certifications"><div className="container cert-grid"><SectionHeading kicker="05 — Certifications" title={<>Proof of progress.<br /><em>Momentum to keep.</em></>} /><div className="cert-list reveal">{certifications.map((cert, index) => <div className="cert-item" key={cert}><span><FiAward /></span><div><p className="kicker">0{index + 1} / Course</p><h3>{cert}</h3></div><FiArrowUpRight /></div>)}</div></div></section>; }
+function Contact() { const [sent, setSent] = useState(false); const submit = (event) => { event.preventDefault(); setSent(true); }; return <section className="section contact" id="contact"><div className="container contact-grid"><div className="contact-intro reveal"><SectionHeading kicker="06 — Contact" title={<>Let’s make<br /><em>something useful.</em></>} /><p>Have an idea, a question, or simply want to connect? I’d be happy to hear from you.</p><div className="contact-details"><a href={`mailto:${profile.email}`}><FiMail />{profile.email}</a><span><FiMapPin />{profile.location}</span><a href={profile.linkedin} target="_blank" rel="noreferrer"><FiLinkedin />LinkedIn profile</a></div></div><form className="contact-form reveal" onSubmit={submit}><label>Name<input required name="name" placeholder="Your name" /></label><label>Email<input required type="email" name="email" placeholder="you@example.com" /></label><label>Message<textarea required name="message" rows="4" placeholder="Tell me a little about it..." /></label><button className="button button-primary" type="submit">{sent ? 'Message noted' : 'Send message'} <FiSend /></button>{sent && <p className="form-success" role="status">Thanks. This form is frontend-only, but your message is ready to be sent.</p>}</form></div></section>; }
+function Footer() { return <footer><div className="container footer-inner"><a className="brand" href="#home"><span>AC</span><strong>akshata<span>.</span></strong></a><p>© 2026 Akshata Chavan. All rights reserved.</p><div className="footer-links"><SocialLinks /><a href="#home" aria-label="Back to top"><FiArrowUpRight /></a></div></div></footer>; }
+export default function App() { return <><Navbar /><main><Hero /><About /><Education /><Skills /><Projects /><Certifications /><Contact /></main><Footer /></>; }

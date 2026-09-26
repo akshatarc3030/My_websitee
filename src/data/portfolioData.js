@@ -21,7 +21,7 @@ export const projects = [
     number: '01',
     name: 'PreservX',
     type: 'Featured concept',
-    description: 'An AI-based application concept designed to automate refrigerator inventory monitoring. The system tracks expiry dates of stored items and sends timely notifications to users.',
+    description: 'An AI-based application designed to automate refrigerator inventory monitoring. The system tracks expiry dates of stored items and sends timely notifications to users.',
     tags: ['Artificial Intelligence', 'Sensors', 'Automation', 'Notifications'],
     featured: true,
   },
